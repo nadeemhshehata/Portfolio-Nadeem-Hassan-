@@ -1,0 +1,151 @@
+type,make,model,trim,year,quarter_mile_time_s,source
+car,Tesla,Model S,Plaid,2023,9.23,MotorTrend
+car,Tesla,Model S,Long Range,2022,11.78,Car and Driver
+car,Tesla,Model 3,Performance,2022,11.60,Car and Driver
+car,Tesla,Model 3,Standard Range Plus,2021,13.28,MotorTrend
+car,Tesla,Model X,Plaid,2023,9.90,MotorTrend
+car,Tesla,Model Y,Performance,2023,12.00,Car and Driver
+car,Porsche,911,GT3 RS,2023,10.90,Road and Track
+car,Porsche,911,Turbo S,2022,10.10,Car and Driver
+car,Porsche,911,Carrera S,2022,11.30,MotorTrend
+car,Porsche,Taycan,Turbo S,2022,10.50,Car and Driver
+car,Porsche,718,Cayman GT4,2022,12.10,Road and Track
+car,BMW,M3,Competition,2022,11.60,Car and Driver
+car,BMW,M4,Competition xDrive,2023,11.20,MotorTrend
+car,BMW,M5,CS,2022,10.60,Car and Driver
+car,BMW,M8,Competition,2021,11.10,Car and Driver
+car,BMW,i4,M50,2023,12.10,MotorTrend
+car,Mercedes-Benz,AMG GT,Black Series,2021,10.30,Road and Track
+car,Mercedes-Benz,C63,AMG S,2021,11.40,Car and Driver
+car,Mercedes-Benz,E63,AMG S,2021,10.90,Car and Driver
+car,Mercedes-Benz,AMG GT,63 S,2022,11.00,MotorTrend
+car,Mercedes-Benz,EQS,AMG,2023,10.80,Car and Driver
+car,Audi,RS e-tron GT,,2022,10.70,Car and Driver
+car,Audi,RS7,,2021,11.20,MotorTrend
+car,Audi,RS6,Avant,2022,11.30,Car and Driver
+car,Audi,R8,V10 Performance,2022,10.80,Road and Track
+car,Audi,RS3,,2023,11.70,MotorTrend
+car,Ford,Mustang,Shelby GT500,2022,10.60,MotorTrend
+car,Ford,Mustang,GT,2021,12.40,Car and Driver
+car,Ford,Mustang,Mach-E GT,2022,12.80,Car and Driver
+car,Ford,Mustang,EcoBoost,2022,14.10,MotorTrend
+car,Ford,GT,,2019,10.80,Road and Track
+car,Ford,F-150,Raptor R,2023,12.90,Car and Driver
+car,Chevrolet,Corvette,Z06,2023,10.60,Car and Driver
+car,Chevrolet,Corvette,Stingray,2022,11.20,MotorTrend
+car,Chevrolet,Camaro,ZL1,2022,11.30,Car and Driver
+car,Chevrolet,Camaro,SS,2020,12.50,MotorTrend
+car,Chevrolet,Camaro,LT1,2022,13.20,MotorTrend
+car,Dodge,Challenger,SRT Hellcat Redeye,2022,10.80,Car and Driver
+car,Dodge,Challenger,SRT Hellcat,2021,11.40,MotorTrend
+car,Dodge,Challenger,R/T Scat Pack,2022,12.20,Car and Driver
+car,Dodge,Charger,SRT Hellcat Redeye,2022,10.90,MotorTrend
+car,Dodge,Charger,R/T Scat Pack,2021,12.40,Car and Driver
+car,Dodge,Viper,ACR,2017,11.10,Road and Track
+car,Lamborghini,Huracan,STO,2022,10.40,MotorTrend
+car,Lamborghini,Huracan,Evo,2021,10.60,Road and Track
+car,Lamborghini,Aventador,SVJ,2020,10.00,Car and Driver
+car,Lamborghini,Urus,,2022,11.30,Car and Driver
+car,Ferrari,SF90,Stradale,2021,9.50,MotorTrend
+car,Ferrari,F8,Tributo,2021,10.20,Car and Driver
+car,Ferrari,Roma,,2022,11.00,Road and Track
+car,Ferrari,296,GTB,2023,10.10,MotorTrend
+car,McLaren,765LT,,2021,9.90,Car and Driver
+car,McLaren,720S,,2020,10.10,Road and Track
+car,McLaren,Artura,,2023,10.70,MotorTrend
+car,Nissan,GT-R,Nismo,2021,10.80,Car and Driver
+car,Nissan,GT-R,Premium,2022,11.10,MotorTrend
+car,Nissan,370Z,Nismo,2020,13.50,Car and Driver
+car,Toyota,Supra,3.0 Premium,2022,12.00,Car and Driver
+car,Toyota,GR86,,2023,13.90,MotorTrend
+car,Toyota,GR Corolla,Circuit Edition,2023,13.20,Car and Driver
+car,Mazda,MX-5 Miata,RF,2023,14.80,MotorTrend
+car,Subaru,WRX,STI,2021,13.40,Car and Driver
+car,Honda,Civic,Type R,2023,13.30,Car and Driver
+car,Honda,NSX,Type S,2022,10.70,MotorTrend
+car,Hyundai,Ioniq 5,N,2024,11.80,Car and Driver
+car,Kia,EV6,GT,2023,11.60,MotorTrend
+car,Rivian,R1T,Quad Motor,2023,11.10,Car and Driver
+car,Rivian,R1S,Quad Motor,2023,11.30,MotorTrend
+car,Lucid,Air,Sapphire,2024,8.95,MotorTrend
+car,Lucid,Air,Grand Touring,2023,9.90,Car and Driver
+car,Rimac,Nevera,,2023,8.58,Road and Track
+car,Bugatti,Chiron,Super Sport,2022,9.40,MotorTrend
+car,Pagani,Huayra,BC,2019,10.40,Road and Track
+car,Koenigsegg,Jesko,Absolut,2023,8.90,MotorTrend
+car,Volkswagen,Golf,R,2022,13.00,Car and Driver
+car,Volkswagen,GTI,,2022,13.70,MotorTrend
+car,Alfa Romeo,Giulia,Quadrifoglio,2022,11.40,Car and Driver
+car,Maserati,MC20,,2023,11.00,Road and Track
+car,Lexus,IS,500,2022,12.50,MotorTrend
+car,Lexus,LC,500,2022,12.70,Car and Driver
+car,Cadillac,CT5-V,Blackwing,2022,11.10,Car and Driver
+car,Cadillac,CT4-V,Blackwing,2023,11.90,MotorTrend
+car,Genesis,G70,3.3T,2023,12.90,Car and Driver
+car,Genesis,GV60,Performance,2023,12.10,MotorTrend
+car,Genesis,G80,Sport,2022,13.30,Car and Driver
+car,Acura,Integra,Type S,2024,13.10,Car and Driver
+car,Acura,TLX,Type S,2022,13.20,MotorTrend
+car,Infiniti,Q60,Red Sport,2022,13.40,Car and Driver
+car,Jaguar,F-Type,R,2021,11.60,Car and Driver
+car,Jaguar,F-Pace,SVR,2022,12.30,MotorTrend
+car,Land Rover,Range Rover,Sport SVR,2022,12.10,Car and Driver
+car,Aston Martin,Vantage,V8,2022,11.50,Road and Track
+car,Aston Martin,DB11,V12,2021,11.20,MotorTrend
+car,Aston Martin,DBS,Superleggera,2020,10.90,Road and Track
+car,Bentley,Continental GT,Speed,2022,10.80,Car and Driver
+car,Bentley,Flying Spur,W12,2021,11.60,MotorTrend
+car,Rolls-Royce,Spectre,,2024,12.40,Car and Driver
+car,Lotus,Emira,V6 First Edition,2023,12.20,Road and Track
+car,Lotus,Evija,,2024,8.60,MotorTrend
+car,Pininfarina,Battista,,2023,8.55,Road and Track
+car,Mercedes-Benz,AMG One,,2023,9.00,MotorTrend
+car,Gordon Murray,T.50,,2023,10.30,Road and Track
+car,Porsche,918,Spyder,2015,9.80,Car and Driver
+car,Ferrari,LaFerrari,,2015,9.70,Road and Track
+car,McLaren,P1,,2014,9.80,MotorTrend
+car,Toyota,Camry,TRD,2023,14.50,Car and Driver
+car,Honda,Accord,Sport 2.0T,2023,14.20,MotorTrend
+car,Hyundai,Elantra,N,2023,13.50,Car and Driver
+car,Mazda,Mazda3,Turbo,2023,14.10,MotorTrend
+car,Kia,Stinger,GT,2022,12.90,Car and Driver
+car,Volkswagen,Jetta,GLI,2023,14.00,MotorTrend
+car,Ford,Bronco,Raptor,2023,13.80,Car and Driver
+car,Jeep,Grand Cherokee,Trackhawk,2021,11.50,MotorTrend
+car,Dodge,Durango,SRT Hellcat,2021,11.80,Car and Driver
+car,Ram,1500,TRX,2023,12.30,MotorTrend
+car,GMC,Hummer,EV,2023,11.90,Car and Driver
+car,Chevrolet,Silverado,EV RST,2024,12.50,MotorTrend
+motorcycle,Ducati,Panigale,V4R,2023,9.80,Cycle World
+motorcycle,Ducati,Streetfighter,V4 S,2022,10.20,Cycle World
+motorcycle,BMW,S1000RR,,2022,9.90,Cycle World
+motorcycle,BMW,M1000RR,,2023,9.60,Motorcyclist
+motorcycle,Yamaha,YZF-R1,M,2022,10.10,Cycle World
+motorcycle,Yamaha,YZF-R6,,2018,11.80,Motorcyclist
+motorcycle,Yamaha,MT-10,SP,2023,10.40,Cycle World
+motorcycle,Kawasaki,Ninja ZX-10R,,2023,10.00,Cycle World
+motorcycle,Kawasaki,Ninja ZX-6R,,2019,11.20,Motorcyclist
+motorcycle,Kawasaki,Ninja H2R,,2023,9.10,Cycle World
+motorcycle,Kawasaki,Z H2,,2022,10.20,Motorcyclist
+motorcycle,Suzuki,GSX-R1000R,,2022,10.10,Cycle World
+motorcycle,Suzuki,Hayabusa,,2022,10.00,Motorcyclist
+motorcycle,Honda,CBR1000RR-R,SP,2023,9.90,Cycle World
+motorcycle,Honda,CBR600RR,,2021,11.30,Motorcyclist
+motorcycle,Aprilia,RSV4,1100 Factory,2022,9.80,Cycle World
+motorcycle,MV Agusta,F3,800,2022,11.50,Motorcyclist
+motorcycle,Triumph,Speed Triple,1200 RS,2023,10.60,Cycle World
+motorcycle,KTM,1290 Super Duke,R Evo,2023,10.30,Cycle World
+motorcycle,Indian,FTR,R Carbon,2022,12.10,Motorcyclist
+motorcycle,Harley-Davidson,LiveWire,,2022,11.00,Cycle World
+motorcycle,Ducati,Multistrada,V4 S,2023,10.80,Cycle World
+motorcycle,BMW,R1250GS,Adventure,2023,12.40,Motorcyclist
+motorcycle,Yamaha,Tracer 9,GT+,2023,11.10,Cycle World
+motorcycle,Kawasaki,Versys,1000 SE,2023,11.90,Motorcyclist
+motorcycle,Suzuki,V-Strom,1050XT,2023,12.30,Cycle World
+motorcycle,KTM,890 Duke,R,2023,10.90,Motorcyclist
+motorcycle,Triumph,Street Triple,RS,2023,10.70,Cycle World
+motorcycle,Aprilia,Tuono,V4 Factory,2023,10.00,Cycle World
+motorcycle,Zero,SR/S,,2023,11.40,Cycle World
+motorcycle,Energica,Ego+,RS,2023,10.80,Motorcyclist
+motorcycle,Kawasaki,Ninja 1000SX,Z1000SX,2019,10.80,MotoStatz
+car,Mercedes-Benz,CLE,AMG 53 Coupe,2026,12.10,CarBuzz

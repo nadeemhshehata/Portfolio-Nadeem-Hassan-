@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DragRace.io — Final Project Report | Group 19</title>
+  <style>
+    /* ===== GLOBAL RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #7c3aed;
+      --primary-light: #a78bfa;
+      --accent: #22d3ee;
+      --bg: #ffffff;
+      --bg-alt: #f3f4f6;
+      --text: #1f2937;
+      --text-muted: #6b7280;
+      --border: #e5e7eb;
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    html { font-size: 11pt; }
+
+    body {
+      font-family: var(--font);
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.65;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1cm 0;
+    }
+
+    /* ===== PRINT ===== */
+    @media print {
+      html { font-size: 10pt; }
+      body { max-width: 100%; padding: 0; margin: 0; }
+      .page-break { page-break-after: always; }
+      .no-break { page-break-inside: avoid; }
+      table { page-break-inside: avoid; }
+      h2, h3 { page-break-after: avoid; }
+      .screenshot-grid { page-break-inside: avoid; }
+      @page {
+        size: letter;
+        margin: 2cm 2cm 2.5cm 2cm;
+      }
+      @page :first { margin-top: 0; }
+    }
+
+    /* ===== COVER PAGE ===== */
+    .cover {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 85vh;
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+    .cover-logo {
+      font-size: 3.2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.3rem;
+    }
+    .cover-logo .logo-accent { color: var(--primary); }
+    .cover-subtitle {
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+    .cover-line {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 4px;
+      margin-bottom: 2rem;
+    }
+    .cover-meta {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: var(--text-muted);
+    }
+    .cover-meta strong { color: var(--text); }
+    .team-table {
+      margin-top: 2rem;
+      border-collapse: collapse;
+    }
+    .team-table th {
+      background: var(--primary);
+      color: #fff;
+      padding: 0.5rem 1.2rem;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .team-table td {
+      padding: 0.4rem 1.2rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+    .team-table tr:nth-child(even) td { background: var(--bg-alt); }
+    .po-row td { font-weight: 600; }
+
+    /* ===== HEADINGS ===== */
+    h2 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 3px solid var(--primary);
+    }
+    h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-top: 1.8rem;
+      margin-bottom: 0.6rem;
+    }
+    h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-top: 1.3rem;
+      margin-bottom: 0.4rem;
+    }
+
+    /* ===== PARAGRAPHS & LISTS ===== */
+    p { margin-bottom: 0.8rem; }
+    ul, ol { margin-bottom: 0.8rem; padding-left: 1.5rem; }
+    li { margin-bottom: 0.3rem; }
+    li strong { color: var(--primary); }
+
+    /* ===== TABLES ===== */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0 1.5rem;
+      font-size: 0.88rem;
+    }
+    th {
+      background: #312e81;
+      color: #fff;
+      padding: 0.55rem 0.8rem;
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    td {
+      padding: 0.45rem 0.8rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    tr:nth-child(even) td { background: #f8f7ff; }
+    td:first-child { font-weight: 500; }
+
+    .status-done {
+      display: inline-block;
+      background: #dcfce7;
+      color: #166534;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.78rem;
+    }
+    .status-deferred {
+      display: inline-block;
+      background: #fef3c7;
+      color: #92400e;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.78rem;
+    }
+    .pass-badge {
+      display: inline-block;
+      background: #dcfce7;
+      color: #166534;
+      padding: 0.1rem 0.4rem;
+      border-radius: 3px;
+      font-weight: 700;
+      font-size: 0.78rem;
+    }
+
+    /* ===== CODE BLOCKS ===== */
+    pre {
+      background: #1e1b4b;
+      color: #e0e7ff;
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      overflow-x: auto;
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      line-height: 1.55;
+      margin: 1rem 0 1.5rem;
+    }
+    code {
+      font-family: var(--mono);
+      font-size: 0.85em;
+      background: var(--bg-alt);
+      padding: 0.15em 0.3em;
+      border-radius: 3px;
+    }
+    pre code { background: none; padding: 0; font-size: 1em; }
+
+    /* ===== ARCHITECTURE DIAGRAM ===== */
+    .arch-diagram {
+      background: #0f172a;
+      color: #94a3b8;
+      border-radius: 10px;
+      padding: 1.2rem 1.5rem;
+      font-family: var(--mono);
+      font-size: 0.76rem;
+      line-height: 1.45;
+      overflow-x: auto;
+      margin: 1rem 0 1.5rem;
+      border: 1px solid #334155;
+    }
+    .arch-diagram .endpoint { color: #a78bfa; }
+    .arch-diagram .component { color: #22d3ee; }
+    .arch-diagram .header { color: #f97316; font-weight: 600; }
+
+    /* ===== SCREENSHOTS ===== */
+    .screenshot-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .screenshot-grid.single { grid-template-columns: 1fr; }
+    .screenshot-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    .screenshot-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .screenshot-card .caption {
+      padding: 0.5rem 0.8rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: var(--bg-alt);
+      text-align: center;
+    }
+
+    /* ===== CALLOUTS ===== */
+    .callout {
+      border-left: 4px solid;
+      padding: 0.8rem 1rem;
+      margin: 1rem 0;
+      border-radius: 0 6px 6px 0;
+      font-size: 0.9rem;
+    }
+    .callout-info {
+      border-color: var(--primary);
+      background: #ede9fe;
+    }
+    .callout-note {
+      border-color: #3b82f6;
+      background: #eff6ff;
+    }
+
+    /* ===== SECTION NUMBERS ===== */
+    .section-num {
+      display: inline-block;
+      background: var(--primary);
+      color: #fff;
+      width: 2rem;
+      height: 2rem;
+      line-height: 2rem;
+      text-align: center;
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-right: 0.5rem;
+      vertical-align: middle;
+    }
+
+    /* ===== FOOTER ===== */
+    .report-footer {
+      text-align: center;
+      padding: 2rem 0 1rem;
+      border-top: 2px solid var(--border);
+      margin-top: 3rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-style: italic;
+    }
+    
+    /* ===== STEP BOXES ===== */
+    .step-box {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      margin: 0.8rem 0;
+    }
+    .step-box h4 {
+      margin-top: 0;
+      color: var(--primary);
+    }
+
+    /* Decision table styling */
+    .decision-table td:first-child {
+      white-space: nowrap;
+      font-weight: 600;
+      color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== COVER PAGE ========== -->
+  <div class="cover">
+    <div class="cover-logo">
+      🏎️ Drag<span class="logo-accent">Race</span>.io
+    </div>
+    <div class="cover-subtitle">Final Project Submission</div>
+    <div class="cover-line"></div>
+    <div class="cover-meta">
+      <strong>CP-317-D — Software Engineering</strong><br>
+      Wilfrid Laurier University — Winter 2026<br>
+      Instructor: Shimaa Abdelmeguid<br><br>
+      <strong>Group 19</strong>
+    </div>
+
+    <table class="team-table">
+      <thead>
+        <tr><th>Name</th><th>Student ID</th><th>Role</th></tr>
+      </thead>
+      <tbody>
+        <tr class="po-row"><td>Nadeem Hassan</td><td>169093285</td><td>Product Owner</td></tr>
+        <tr><td>Humza Baig</td><td>169060065</td><td>Scrum Master</td></tr>
+        <tr><td>Omeed Attayi</td><td>169060147</td><td>Backend Developer</td></tr>
+        <tr><td>Elias Zubaidi</td><td>169065051</td><td>Backend Developer</td></tr>
+        <tr><td>Qasim Naeemuddin</td><td>16908653</td><td>Frontend Developer</td></tr>
+        <tr><td>Awale Hussein</td><td>169038976</td><td>Frontend Developer &amp; QA Lead</td></tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top: 2rem; color: var(--text-muted); font-size: 0.9rem;">
+      <strong>Date:</strong> April 2026
+    </div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- ========== SECTION 1 ========== -->
+  <h2><span class="section-num">1</span> Final Project Description</h2>
+
+  <h3>Purpose</h3>
+  <p>DragRace.io is a web-based quarter-mile drag-race simulator designed for automotive and motorcycle enthusiasts who want to compare real-world vehicle performance in an engaging, visual format. The system allows users to browse a curated catalog of 149 real vehicles — spanning supercars, sports sedans, muscle cars, electric vehicles, and motorcycles — select any two for a head-to-head matchup, and watch a 3D race animation that reflects their actual quarter-mile times.</p>
+
+  <h3>Problem</h3>
+  <p>Enthusiasts frequently debate which vehicles are fastest, but existing resources (car review sites, YouTube comparisons) lack an interactive, standardized way to pit any two vehicles against each other using consistent data. DragRace.io solves this by providing a single platform where users can instantly compare any pair from a verified performance database.</p>
+
+  <h3>Customer &amp; Users</h3>
+  <p>The primary users are casual and dedicated car and motorcycle enthusiasts who enjoy quarter-mile performance comparisons. The system requires no account creation, making it immediately accessible to any visitor.</p>
+
+  <h3>Delivered Features</h3>
+  <p>The final system provides five interconnected pages:</p>
+  <ol>
+    <li><strong>Home</strong> — Browse 149 vehicles in a searchable, filterable grid with real-time debounced search. Select two vehicles (A and B) for a head-to-head matchup.</li>
+    <li><strong>Race Results</strong> — Watch a Three.js 3D bird's-eye race animation with proper pacing based on actual quarter-mile times, then view the winner, both times, and the margin of victory.</li>
+    <li><strong>Vehicle Detail</strong> — Inspect full specifications for any vehicle, including make, model, trim, year, type, quarter-mile time, and data source.</li>
+    <li><strong>Leaderboard</strong> — View all vehicles ranked by quarter-mile time with gold/silver/bronze podium highlighting and type filtering.</li>
+    <li><strong>Race History</strong> — Review all past race results with human-readable vehicle names, winner identification, time margins, and timestamps.</li>
+  </ol>
+  <p>Cross-cutting features include dark/light theme toggling with persistence, comprehensive keyboard accessibility, responsive layout (desktop/tablet/mobile), API rate limiting, input validation, and server-side response caching.</p>
+
+  <h3>Evolution from Earlier Iterations</h3>
+  <p>Sprint 01 delivered the core browse-select-race-results flow as a minimal viable product. Sprint 02 added visual polish (Three.js race animation), security hardening (rate limiting, restricted CORS), and accessibility (ARIA labels, keyboard navigation, prefers-reduced-motion support). Sprint 03 expanded the feature set with vehicle details, leaderboard, race history, caching, theme toggle, and a 45% increase in the vehicle catalog (103 → 149). Each sprint delivered a working, tested increment that built on top of the previous one.</p>
+
+  <div class="page-break"></div>
+
+  <!-- ========== SECTION 2 ========== -->
+  <h2><span class="section-num">2</span> Final Product Backlog</h2>
+
+  <h3>2.1 Completed Stories</h3>
+  <p>All stories below have been implemented, tested, and accepted by the Product Owner.</p>
+
+  <table>
+    <thead>
+      <tr><th>ID</th><th>Story Title</th><th>Priority</th><th>Pts</th><th>Sprint</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>API-01</td><td>Vehicle listing API with search, filter, and paging</td><td>High</td><td>5</td><td>1</td><td><span class="status-done">Done</span></td></tr>
+      <tr><td>API-02</td><td>Single vehicle detail endpoint</td><td>High</td><td>2</td><td>1</td><td><span class="status-done">Done</span></td></tr>
+      <tr><td>RACE-01</td><td>Race prediction endpoint (winner, times, diff)</td><td>High</td><td>3</td><td>1</td><td><span class="status-done">Done</span></td></tr>
+      <tr><td>UI-01</td><td>Vehicle browse page with responsive card grid</td><td>High</td><td>5</td><td>1</td><td><span class="status-done">Done</span></td></tr>
+      <tr><td>UI-02</td><td>Search bar with 300ms debounce</td><td>Medium</td><td>3</td><td>1</td><td><span class="status-done">Done</span></td></tr>
+      <tr><td>UI-03</td><td>Race results page with winner banner</td><td>Medium</td><td>3</td><td>1</td><td><span class="status-done">Done</span></td></tr>
+      <tr><td>RACE-02</td><td>Three.js bird's-eye race animation</td><td>High</td><td>5</td><td>2</td><td><span class="status-done">Done</span></td></tr>
+      <tr><td>SEC-01</td><td>API security: rate limiting, CORS, input validation</td><td>High</td><td>3</td><td>2</td><td><span class="status-done">Done</span></td></tr>
+      <tr><td>ACC-01</td><td>Accessibility: ARIA, keyboard nav, focus rings, reduced-motion</td><td>Medium</td><td>3</td><td>2</td><td><span class="status-done">Done</span></td></tr>
+      <tr><td>UI-07</td><td>Responsive layout + error/empty/loading states</td><td>Medium</td><td>3</td><td>2</td><td><span class="status-done">Done</span></td></tr>
+      <tr><td>UI-04</td><td>Vehicle detail page with full specifications</td><td>Medium</td><td>3</td><td>3</td><td><span class="status-done">Done</span></td></tr>
+      <tr><td>LB-01</td><td>Leaderboard page (ranked by ¼-mile time)</td><td>Medium</td><td>3</td><td>3</td><td><span class="status-done">Done</span></td></tr>
+      <tr><td>HIST-01</td><td>Race history with persistent storage and labels</td><td>Medium</td><td>5</td><td>3</td><td><span class="status-done">Done</span></td></tr>
+      <tr><td>PERF-01</td><td>Server-side TTL caching with X-Cache headers</td><td>Low</td><td>2</td><td>3</td><td><span class="status-done">Done</span></td></tr>
+      <tr><td>UI-08</td><td>Dark/light theme toggle with localStorage persistence</td><td>Low</td><td>2</td><td>3</td><td><span class="status-done">Done</span></td></tr>
+      <tr><td>RACE-03</td><td>GLB 3D model loading (car/motorcycle) with fallback</td><td>Low</td><td>2</td><td>3</td><td><span class="status-done">Done</span></td></tr>
+      <tr><td>LEGAL-01</td><td>Simulation disclaimer on results page</td><td>Low</td><td>1</td><td>3</td><td><span class="status-done">Done</span></td></tr>
+      <tr><td>UI-05</td><td>Navigation bar across all pages</td><td>Medium</td><td>2</td><td>3</td><td><span class="status-done">Done</span></td></tr>
+      <tr><td>DATA-01</td><td>Vehicle catalog expansion (103 → 149 vehicles)</td><td>Low</td><td>2</td><td>3</td><td><span class="status-done">Done</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-info">
+    <strong>Total: 19 stories completed — approximately 60 story points across 3 sprints.</strong>
+  </div>
+
+  <h3>2.2 Deferred / Future Work</h3>
+
+  <table>
+    <thead>
+      <tr><th>ID</th><th>Story Title</th><th>Reason</th><th>Future Action</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>AUTH-01</td><td>User authentication (login/signup)</td><td>Not required for core browse-race flow; adds complexity without proportional user value</td><td><span class="status-deferred">Deferred</span> — Implement with OAuth or JWT sessions</td></tr>
+      <tr><td>HIST-02</td><td>Per-user race history</td><td>Depends on AUTH-01 (needs user context)</td><td><span class="status-deferred">Deferred</span> — Partition history by user ID</td></tr>
+      <tr><td>DATA-02</td><td>Expand catalog to 300+ vehicles</td><td>149 vehicles provides sufficient variety</td><td><span class="status-deferred">Deferred</span> — Add more CSV rows</td></tr>
+      <tr><td>DEPLOY-01</td><td>Cloud deployment</td><td>Runs locally; deployment deferred due to timeline</td><td><span class="status-deferred">Deferred</span> — Render + Vercel</td></tr>
+    </tbody>
+  </table>
+
+  <h3>2.3 Excel Reference</h3>
+  <p>The complete product backlog is provided as a separate Excel file (<strong>Group19_Final_ProductBacklog.xlsx</strong>) attached to this submission. It contains all stories across Milestones 01–02 and Sprints 01–03, including sprint assignments, point values, priority levels, and final status.</p>
+
+  <div class="page-break"></div>
+
+  <!-- ========== SECTION 3 ========== -->
+  <h2><span class="section-num">3</span> Design Document</h2>
+
+  <h3>3.1 System Architecture</h3>
+  <p>DragRace.io uses a two-tier client-server architecture:</p>
+  <ul>
+    <li><strong>Frontend (React SPA):</strong> A single-page application built with Vite, React 19, and TypeScript. It communicates with the backend exclusively through RESTful HTTP calls using the Fetch API. Client-side routing is managed by react-router-dom. The Three.js library powers the 3D race animation with GLTF model loading.</li>
+    <li><strong>Backend (FastAPI REST API):</strong> A Python FastAPI application exposing five REST endpoints. It uses SQLAlchemy ORM for database access, Pydantic for request/response validation, slowapi for rate limiting, and cachetools for server-side response caching.</li>
+    <li><strong>Database (SQLite):</strong> Two tables — <code>vehicles</code> (149 records seeded from CSV) and <code>race_history</code> (automatically populated when races occur). SQLite was chosen for zero-configuration local development; the ORM abstraction allows straightforward migration to PostgreSQL for production.</li>
+  </ul>
+
+  <h3>3.2 High-Level Architecture Diagram</h3>
+
+  <div class="arch-diagram">
+<pre style="background:none;color:inherit;padding:0;margin:0;border-radius:0;">
+<span class="header">┌─────────────────────────────────────────────────┐</span>
+<span class="header">│                USER (Browser)                    │</span>
+<span class="header">│</span>  <span class="component">┌───────────────────────────────────────────┐</span>  <span class="header">│</span>
+<span class="header">│</span>  <span class="component">│          React SPA (Vite + TS)            │</span>  <span class="header">│</span>
+<span class="header">│</span>  <span class="component">│</span>  <span class="endpoint">┌────────┐ ┌───────┐ ┌──────────────┐</span>   <span class="component">│</span>  <span class="header">│</span>
+<span class="header">│</span>  <span class="component">│</span>  <span class="endpoint">│ Home   │ │Results│ │Vehicle Detail│</span>   <span class="component">│</span>  <span class="header">│</span>
+<span class="header">│</span>  <span class="component">│</span>  <span class="endpoint">└────────┘ └───────┘ └──────────────┘</span>   <span class="component">│</span>  <span class="header">│</span>
+<span class="header">│</span>  <span class="component">│</span>  <span class="endpoint">┌────────────┐ ┌─────────┐</span>               <span class="component">│</span>  <span class="header">│</span>
+<span class="header">│</span>  <span class="component">│</span>  <span class="endpoint">│Leaderboard │ │ History │</span>               <span class="component">│</span>  <span class="header">│</span>
+<span class="header">│</span>  <span class="component">│</span>  <span class="endpoint">└────────────┘ └─────────┘</span>               <span class="component">│</span>  <span class="header">│</span>
+<span class="header">│</span>  <span class="component">│</span>  <span class="endpoint">┌──────────────────┐ ┌──────────────┐</span>  <span class="component">│</span>  <span class="header">│</span>
+<span class="header">│</span>  <span class="component">│</span>  <span class="endpoint">│  RaceAnimation   │ │ ThemeToggle  │</span>  <span class="component">│</span>  <span class="header">│</span>
+<span class="header">│</span>  <span class="component">│</span>  <span class="endpoint">│  (Three.js/GLB)  │ │ (localStorage)│</span> <span class="component">│</span>  <span class="header">│</span>
+<span class="header">│</span>  <span class="component">│</span>  <span class="endpoint">└──────────────────┘ └──────────────┘</span>  <span class="component">│</span>  <span class="header">│</span>
+<span class="header">│</span>  <span class="component">└───────────────────────────────────────────┘</span>  <span class="header">│</span>
+<span class="header">│</span>           │  fetch() / REST calls                <span class="header">│</span>
+<span class="header">└───────────┼─────────────────────────────────────┘</span>
+            │  HTTP (localhost:5173 → :8000)
+            ▼
+<span class="header">┌─────────────────────────────────────────────────┐</span>
+<span class="header">│              FastAPI Backend (Python)             │</span>
+<span class="header">│</span>  <span class="component">┌─────────────────────────────────────────┐</span>    <span class="header">│</span>
+<span class="header">│</span>  <span class="component">│  Middleware: CORS · Rate Limiter (60/m) │</span>    <span class="header">│</span>
+<span class="header">│</span>  <span class="component">├─────────────────────────────────────────┤</span>    <span class="header">│</span>
+<span class="header">│</span>  <span class="component">│</span>  <span class="endpoint">GET /vehicles</span>        (TTL cache)       <span class="component">│</span>    <span class="header">│</span>
+<span class="header">│</span>  <span class="component">│</span>  <span class="endpoint">GET /vehicles/{id}</span>                     <span class="component">│</span>    <span class="header">│</span>
+<span class="header">│</span>  <span class="component">│</span>  <span class="endpoint">GET /leaderboard</span>     (sorted by time)  <span class="component">│</span>    <span class="header">│</span>
+<span class="header">│</span>  <span class="component">│</span>  <span class="endpoint">POST /race/predict</span>   (persists hist.)  <span class="component">│</span>    <span class="header">│</span>
+<span class="header">│</span>  <span class="component">│</span>  <span class="endpoint">GET /history</span>         (newest first)    <span class="component">│</span>    <span class="header">│</span>
+<span class="header">│</span>  <span class="component">├─────────────────────────────────────────┤</span>    <span class="header">│</span>
+<span class="header">│</span>  <span class="component">│  SQLAlchemy ORM · Pydantic Schemas      │</span>    <span class="header">│</span>
+<span class="header">│</span>  <span class="component">└──────────────┬──────────────────────────┘</span>    <span class="header">│</span>
+<span class="header">│</span>                 ▼                                <span class="header">│</span>
+<span class="header">│</span>  <span class="component">┌─────────────────────────────────┐</span>            <span class="header">│</span>
+<span class="header">│</span>  <span class="component">│       SQLite (dev.db)           │</span>            <span class="header">│</span>
+<span class="header">│</span>  <span class="component">│  vehicles (149 rows)            │</span>            <span class="header">│</span>
+<span class="header">│</span>  <span class="component">│  race_history (auto-populated)  │</span>            <span class="header">│</span>
+<span class="header">│</span>  <span class="component">└─────────────────────────────────┘</span>            <span class="header">│</span>
+<span class="header">└─────────────────────────────────────────────────┘</span>
+</pre>
+  </div>
+
+  <h3>3.3 Database Schema</h3>
+
+  <pre><code>-- Table: vehicles
+CREATE TABLE vehicles (
+    id                   INTEGER PRIMARY KEY AUTOINCREMENT,
+    type                 VARCHAR NOT NULL,     -- "car" | "motorcycle"
+    make                 VARCHAR NOT NULL,
+    model                VARCHAR NOT NULL,
+    trim                 VARCHAR DEFAULT '',
+    year                 INTEGER NOT NULL,
+    quarter_mile_time_s  FLOAT NOT NULL,
+    source               VARCHAR DEFAULT ''
+);
+CREATE INDEX ix_vehicles_make ON vehicles (make);
+CREATE INDEX ix_vehicles_model ON vehicles (model);
+CREATE INDEX ix_vehicles_year ON vehicles (year);
+CREATE INDEX ix_vehicles_quarter_mile ON vehicles (quarter_mile_time_s);
+
+-- Table: race_history
+CREATE TABLE race_history (
+    id               INTEGER PRIMARY KEY AUTOINCREMENT,
+    vehicle_a_id     INTEGER NOT NULL REFERENCES vehicles(id),
+    vehicle_b_id     INTEGER NOT NULL REFERENCES vehicles(id),
+    winner           VARCHAR NOT NULL,  -- "A" | "B" | "Tie"
+    vehicle_a_time_s FLOAT NOT NULL,
+    vehicle_b_time_s FLOAT NOT NULL,
+    diff_s           FLOAT NOT NULL,
+    created_at       DATETIME DEFAULT CURRENT_TIMESTAMP
+);</code></pre>
+
+  <h3>3.4 Key UI Screens</h3>
+
+  <div class="screenshot-grid">
+    <div class="screenshot-card no-break">
+      <img src="Screenshots/01_Home.png" alt="Home Page">
+      <div class="caption">Home — Vehicle grid, search, matchup bar</div>
+    </div>
+    <div class="screenshot-card no-break">
+      <img src="Screenshots/02_Results.png" alt="Results Page">
+      <div class="caption">Results — Winner banner, comparison, disclaimer</div>
+    </div>
+    <div class="screenshot-card no-break">
+      <img src="Screenshots/03_VehicleDetail.png" alt="Vehicle Detail Page">
+      <div class="caption">Vehicle Detail — Full spec sheet</div>
+    </div>
+    <div class="screenshot-card no-break">
+      <img src="Screenshots/04_Leaderboard.png" alt="Leaderboard Page">
+      <div class="caption">Leaderboard — Ranked with gold/silver/bronze</div>
+    </div>
+  </div>
+  <div class="screenshot-grid single">
+    <div class="screenshot-card no-break">
+      <img src="Screenshots/05_History.png" alt="Race History Page">
+      <div class="caption">History — Past races with timestamps</div>
+    </div>
+  </div>
+
+  <h3>3.5 Design Decisions</h3>
+
+  <table class="decision-table">
+    <thead><tr><th>Decision</th><th>Rationale</th></tr></thead>
+    <tbody>
+      <tr><td>SQLite over PostgreSQL</td><td>Zero-configuration setup for evaluators; SQLAlchemy ORM makes migration trivial</td></tr>
+      <tr><td>No authentication</td><td>The core value (comparing vehicles) does not require user accounts</td></tr>
+      <tr><td>FastAPI over Flask/Django</td><td>Built-in Pydantic validation, auto-generated API docs, async support</td></tr>
+      <tr><td>React + Vite over Next.js</td><td>Client-side SPA is sufficient; faster dev-server startup</td></tr>
+      <tr><td>Three.js for animation</td><td>Hardware-accelerated 3D rendering in browser; GLTFLoader supports industry-standard models</td></tr>
+      <tr><td>TTL cache (60s) on /vehicles</td><td>Vehicle data is static; caching eliminates redundant DB queries</td></tr>
+      <tr><td>Glassmorphism CSS</td><td>Modern premium feel; no CSS framework dependency</td></tr>
+      <tr><td>Debounced search (300ms)</td><td>Prevents per-keystroke API calls</td></tr>
+      <tr><td>Auto-persist race history</td><td>Each prediction writes to race_history automatically — zero friction</td></tr>
+    </tbody>
+  </table>
+
+  <div class="page-break"></div>
+
+  <!-- ========== SECTION 4 ========== -->
+  <h2><span class="section-num">4</span> User Manual / Quick Start</h2>
+
+  <h3>4.1 Prerequisites</h3>
+
+  <table>
+    <thead><tr><th>Requirement</th><th>Version</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td>Python</td><td>3.10+</td><td>Backend runtime</td></tr>
+      <tr><td>Node.js</td><td>18+</td><td>Frontend build tool</td></tr>
+      <tr><td>npm</td><td>9+</td><td>Package manager (bundled with Node)</td></tr>
+      <tr><td>Git</td><td>Any</td><td>Clone repository</td></tr>
+      <tr><td>Web browser</td><td>Chrome / Firefox / Safari</td><td>Application frontend</td></tr>
+    </tbody>
+  </table>
+
+  <h3>4.2 Quick Start (&lt; 5 minutes)</h3>
+
+  <div class="step-box no-break">
+    <h4>Step 1: Clone the repository</h4>
+    <pre><code>git clone &lt;GITHUB URL&gt;
+cd Code</code></pre>
+  </div>
+
+  <div class="step-box no-break">
+    <h4>Step 2: Start the backend</h4>
+    <pre><code>cd backend
+python -m venv .venv
+source .venv/bin/activate          # macOS/Linux
+# .venv\Scripts\activate           # Windows
+pip install -r requirements.txt
+python seed.py                     # populate 149 vehicles into SQLite
+uvicorn main:app --reload --port 8000</code></pre>
+    <p>You should see: <code>Uvicorn running on http://127.0.0.1:8000</code></p>
+  </div>
+
+  <div class="step-box no-break">
+    <h4>Step 3: Start the frontend (new terminal)</h4>
+    <pre><code>cd frontend
+npm install
+npm run dev</code></pre>
+    <p>You should see: <code>Local: http://localhost:5173/</code></p>
+  </div>
+
+  <div class="step-box no-break">
+    <h4>Step 4: Open the application</h4>
+    <p>Navigate to <strong>http://localhost:5173</strong> in your browser.</p>
+    <div class="callout callout-note"><strong>No login or account creation is required.</strong> The application is immediately usable.</div>
+  </div>
+
+  <h3>4.3 Feature Walkthrough</h3>
+
+  <h4>Browse &amp; Search Vehicles</h4>
+  <ol>
+    <li>The Home page displays a grid of vehicle cards showing make, model, trim, year, type, and quarter-mile time.</li>
+    <li>Type in the search bar (e.g., "corvette") — results filter after a 300ms debounce.</li>
+    <li>Use the type dropdown to filter by "Cars" or "Motorcycles."</li>
+    <li>Click a vehicle's title to navigate to its detail page.</li>
+  </ol>
+
+  <h4>Set Up a Race</h4>
+  <ol>
+    <li>Click <strong>"Set as A"</strong> on any vehicle card to select it as Vehicle A.</li>
+    <li>Click <strong>"Set as B"</strong> on a different vehicle to select it as Vehicle B.</li>
+    <li>Selected vehicles appear in the matchup bar at the top.</li>
+    <li>Click <strong>"🚀 Race!"</strong> to start the matchup.</li>
+  </ol>
+
+  <h4>Watch the Race &amp; View Results</h4>
+  <ol>
+    <li>A Three.js 3D bird's-eye race animation plays (~8 seconds). The faster vehicle crosses first.</li>
+    <li>Click <strong>"⏩ Skip Animation"</strong> to jump directly to results.</li>
+    <li>The Results panel shows: winner banner, side-by-side comparison, and time margin.</li>
+    <li>A simulation disclaimer appears below the results.</li>
+    <li>Click <strong>"↩ New Matchup"</strong> to return to the Home page.</li>
+  </ol>
+
+  <h4>Explore the Leaderboard</h4>
+  <ol>
+    <li>Click <strong>"🏆 Leaderboard"</strong> in the navigation bar.</li>
+    <li>Vehicles are ranked fastest to slowest with gold, silver, and bronze highlighting.</li>
+    <li>Use the type filter to see "Cars Only" or "Motorcycles Only."</li>
+  </ol>
+
+  <h4>View Race History</h4>
+  <ol>
+    <li>Click <strong>"📜 History"</strong> in the navigation bar.</li>
+    <li>Each past race shows the A vs B matchup with the winner highlighted in green.</li>
+    <li>The most recent race appears at the top.</li>
+  </ol>
+
+  <h4>Toggle Theme</h4>
+  <ol>
+    <li>Click the <strong>"☀️ Light" / "🌙 Dark"</strong> button in the top-right corner.</li>
+    <li>The theme persists across page reloads (stored in localStorage).</li>
+  </ol>
+
+  <h3>4.4 API Documentation</h3>
+  <p>FastAPI auto-generates interactive API docs. With the backend running, visit:</p>
+  <ul>
+    <li><strong>Swagger UI:</strong> http://localhost:8000/docs</li>
+    <li><strong>ReDoc:</strong> http://localhost:8000/redoc</li>
+  </ul>
+
+  <h3>4.5 Running Tests</h3>
+  <pre><code>cd backend
+python -m pytest test_main.py tests/test_integration.py -v</code></pre>
+  <p>Expected output: <strong>39 tests passed.</strong></p>
+
+  <h3>4.6 Troubleshooting</h3>
+  <table>
+    <thead><tr><th>Problem</th><th>Solution</th></tr></thead>
+    <tbody>
+      <tr><td><code>pip install</code> fails</td><td>Ensure you activated the virtual environment first</td></tr>
+      <tr><td>CORS errors in browser</td><td>Ensure backend runs on port 8000, frontend on 5173</td></tr>
+      <tr><td>"Could not load vehicles" error</td><td>Backend is not running — start uvicorn</td></tr>
+      <tr><td>3D animation shows boxes</td><td>Place car.glb and motorcycle.glb in frontend/public/models/</td></tr>
+      <tr><td>Search feels slow</td><td>The 300ms debounce is intentional to reduce API calls</td></tr>
+    </tbody>
+  </table>
+
+  <div class="page-break"></div>
+
+  <!-- ========== SECTION 5 ========== -->
+  <h2><span class="section-num">5</span> Summary of Testing</h2>
+
+  <h3>5.1 Methodology</h3>
+  <p>Testing was conducted at four levels throughout the project:</p>
+  <ol>
+    <li><strong>Automated Unit &amp; Integration Tests (pytest):</strong> 39 automated tests using FastAPI's TestClient with an isolated SQLite test database. Tests cover all five API endpoints, input validation, error handling, race prediction logic, leaderboard ordering, history persistence, caching behavior, and cross-module consistency.</li>
+    <li><strong>Manual Functional Testing:</strong> Systematic manual test cases executed against the running application, covering full user workflows, edge cases, UI states, and responsive layout behavior. The Sprint 03 regression checklist contains 35 items.</li>
+    <li><strong>Product Owner Acceptance Testing:</strong> The Product Owner reviewed each user story against its acceptance criteria at the end of every sprint and formally accepted or rejected stories.</li>
+    <li><strong>Automated Demo Testing (Playwright):</strong> A Playwright script (<code>demo.js</code>) automates the full application workflow for the demo video, verifying theme persistence, cache behavior (X-Cache headers), navigation, search, race animation, and the simulation disclaimer.</li>
+  </ol>
+
+  <h3>5.2 Results Table — Key Tests</h3>
+
+  <table>
+    <thead>
+      <tr><th>Story ID</th><th>Test</th><th>Expected</th><th>Actual</th><th>Result</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>API-01</td><td>GET /vehicles returns paginated list</td><td>200 + array of vehicles</td><td>200 + array</td><td><span class="pass-badge">✅ Pass</span></td></tr>
+      <tr><td>API-01</td><td>Search q=corvette filters correctly</td><td>Only Corvette returned</td><td>Corvette returned</td><td><span class="pass-badge">✅ Pass</span></td></tr>
+      <tr><td>API-01</td><td>Type filter type=motorcycle</td><td>Only motorcycles</td><td>Only motorcycles</td><td><span class="pass-badge">✅ Pass</span></td></tr>
+      <tr><td>API-02</td><td>GET /vehicles/1 returns vehicle</td><td>200 + vehicle data</td><td>200 + data</td><td><span class="pass-badge">✅ Pass</span></td></tr>
+      <tr><td>API-02</td><td>GET /vehicles/999999</td><td>404</td><td>404</td><td><span class="pass-badge">✅ Pass</span></td></tr>
+      <tr><td>RACE-01</td><td>Faster vehicle wins race</td><td>winner=A, diff≈3.17</td><td>winner=A, diff=3.17</td><td><span class="pass-badge">✅ Pass</span></td></tr>
+      <tr><td>RACE-01</td><td>Identical times → Tie</td><td>winner=Tie, diff=0</td><td>winner=Tie, diff=0</td><td><span class="pass-badge">✅ Pass</span></td></tr>
+      <tr><td>RACE-01</td><td>Invalid vehicle ID → 404</td><td>404</td><td>404</td><td><span class="pass-badge">✅ Pass</span></td></tr>
+      <tr><td>SEC-01</td><td>limit&gt;100 → rejected</td><td>422</td><td>422</td><td><span class="pass-badge">✅ Pass</span></td></tr>
+      <tr><td>SEC-01</td><td>offset&lt;0 → rejected</td><td>422</td><td>422</td><td><span class="pass-badge">✅ Pass</span></td></tr>
+      <tr><td>SEC-01</td><td>200-char query → safe truncation</td><td>200 (no crash)</td><td>200</td><td><span class="pass-badge">✅ Pass</span></td></tr>
+      <tr><td>SEC-01</td><td>year_min&lt;1900 → rejected</td><td>422</td><td>422</td><td><span class="pass-badge">✅ Pass</span></td></tr>
+      <tr><td>LB-01</td><td>Leaderboard sorted ascending</td><td>Times ascending</td><td>Times ascending</td><td><span class="pass-badge">✅ Pass</span></td></tr>
+      <tr><td>HIST-01</td><td>Race creates history record</td><td>≥1 entry after race</td><td>Entry created</td><td><span class="pass-badge">✅ Pass</span></td></tr>
+      <tr><td>HIST-01</td><td>History newest first</td><td>Desc by created_at</td><td>Descending</td><td><span class="pass-badge">✅ Pass</span></td></tr>
+      <tr><td>HIST-01</td><td>Labels are human-readable</td><td>Non-empty strings</td><td>Labels present</td><td><span class="pass-badge">✅ Pass</span></td></tr>
+      <tr><td>PERF-01</td><td>First request → X-Cache: MISS</td><td>MISS header</td><td>MISS header</td><td><span class="pass-badge">✅ Pass</span></td></tr>
+      <tr><td>PERF-01</td><td>Repeat request → X-Cache: HIT</td><td>HIT header</td><td>HIT header</td><td><span class="pass-badge">✅ Pass</span></td></tr>
+      <tr><td>INT</td><td>Leaderboard matches vehicle detail</td><td>Same quarter-mile times</td><td>Matching</td><td><span class="pass-badge">✅ Pass</span></td></tr>
+      <tr><td>INT</td><td>Race result matches history record</td><td>Same winner and diff</td><td>Matching</td><td><span class="pass-badge">✅ Pass</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>5.3 Test Suite Summary</h3>
+
+  <table>
+    <thead><tr><th>Test File</th><th style="text-align:center">Tests</th><th>Coverage Area</th></tr></thead>
+    <tbody>
+      <tr><td>test_main.py</td><td style="text-align:center">34</td><td>Vehicles, detail, race, security, leaderboard, history, integration</td></tr>
+      <tr><td>tests/test_integration.py</td><td style="text-align:center">5</td><td>API-to-Three.js mapping, cache MISS/HIT, theme persistence</td></tr>
+      <tr style="font-weight:700;"><td>Total</td><td style="text-align:center">39</td><td>All 5 endpoints + cross-module consistency</td></tr>
+    </tbody>
+  </table>
+
+  <h3>5.4 Known Issues &amp; Limitations</h3>
+
+  <table>
+    <thead><tr><th>#</th><th>Issue</th><th>Severity</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>No automated frontend tests</td><td>Medium</td><td>Frontend validated through 35-item manual regression checklist and Playwright demo</td></tr>
+      <tr><td>2</td><td>Race history is global (not per-user)</td><td>Low</td><td>By design — no authentication system</td></tr>
+      <tr><td>3</td><td>SQLite single-writer limitation</td><td>Low</td><td>Acceptable for local development</td></tr>
+      <tr><td>4</td><td>GLB models must be manually placed</td><td>Low</td><td>Box fallback works if models missing</td></tr>
+      <tr><td>5</td><td>Rate limiting not stress-tested</td><td>Low</td><td>Configured at 60/min; headers confirmed</td></tr>
+    </tbody>
+  </table>
+
+  <div class="page-break"></div>
+
+  <!-- ========== SECTION 6 ========== -->
+  <h2><span class="section-num">6</span> Ethical Dimensions Report</h2>
+
+  <h3>6.1 Privacy</h3>
+  <p>DragRace.io collects <strong>no personal data</strong>. There is no user registration, no login, no cookies (beyond browser defaults), and no analytics tracking. The only data persisted is the vehicle catalog (pre-loaded) and race history records (containing only vehicle IDs, times, and timestamps — no user identifiers).</p>
+  <p>This was an intentional design decision: by not building user accounts, we eliminated the entire class of risks associated with password storage, data breaches, account enumeration, and GDPR/PIPEDA compliance obligations. If authentication were added in the future, it would introduce responsibilities around secure password hashing, session management, and data retention policies that would need to be carefully addressed.</p>
+
+  <h3>6.2 Security</h3>
+  <p>Despite being a local-only prototype, the system implements several security measures:</p>
+  <ul>
+    <li><strong>CORS Restriction (SEC-01):</strong> The open CORS policy (*) from Sprint 01 was replaced in Sprint 02 with an explicit allowlist (localhost:5173, localhost:4173). This prevents unauthorized cross-origin requests from arbitrary domains.</li>
+    <li><strong>Rate Limiting:</strong> All five endpoints are rate-limited to 60 requests per minute per IP via slowapi. This mitigates denial-of-service and brute-force abuse.</li>
+    <li><strong>Input Validation:</strong> FastAPI's Pydantic validation rejects malformed requests at the API boundary. Search strings are capped at 100 characters. Year filters are constrained to 1900–2030. Pagination enforces non-negative offsets and a maximum limit of 100.</li>
+    <li><strong>SQL Injection Prevention:</strong> All database queries use SQLAlchemy's parameterized ORM queries — no raw SQL concatenation.</li>
+  </ul>
+  <p><strong>Remaining risks:</strong> The application runs over HTTP (not HTTPS) in development. A production deployment would require TLS encryption. The lack of authentication means any user can access the full API.</p>
+
+  <h3>6.3 Accessibility</h3>
+  <p>Accessibility was a first-class concern starting in Sprint 02:</p>
+  <ul>
+    <li><strong>ARIA Labels:</strong> All interactive elements carry descriptive aria-label attributes. The matchup bar, vehicle grid, and results section use appropriate role attributes.</li>
+    <li><strong>Keyboard Navigation:</strong> All controls are reachable via Tab. Focus-visible outlines (purple, 2px with offset) appear on all focusable elements using the :focus-visible pattern.</li>
+    <li><strong>Reduced Motion:</strong> The CSS includes a prefers-reduced-motion: reduce media query that disables all animations. The Three.js race animation explicitly checks this preference and skips directly to results.</li>
+    <li><strong>Skip Link:</strong> A hidden skip-to-content link appears on keyboard focus for screen reader users.</li>
+    <li><strong>Semantic HTML:</strong> Headings follow a logical hierarchy. Error states use role="alert" for screen-reader announcement.</li>
+  </ul>
+  <p><strong>Areas for improvement:</strong> We did not conduct a formal WCAG 2.1 AA audit. Color contrast ratios in the dark glassmorphism theme may not meet the 4.5:1 minimum for small text. A production deployment should include an axe-core audit and screen reader testing (VoiceOver, NVDA).</p>
+
+  <h3>6.4 Fairness &amp; Bias in Data</h3>
+  <p>The vehicle catalog is sourced from published quarter-mile test data from reputable automotive publications (MotorTrend, Car and Driver, Road and Track, Cycle World, Motorcyclist). Each vehicle record includes a <code>source</code> field attributing the data origin.</p>
+  <p><strong>Potential bias concerns:</strong></p>
+  <ul>
+    <li>The catalog over-represents premium and performance vehicles relative to mainstream cars. A user might assume the leaderboard represents all vehicles, when it is a curated subset.</li>
+    <li>Quarter-mile times vary based on test conditions. Our data uses published results from professional testers, but real-world results will differ.</li>
+  </ul>
+  <p><strong>Mitigations implemented:</strong></p>
+  <ul>
+    <li>The results page includes a prominent disclaimer: <em>"DragRace.io is a simulation tool for educational purposes only. Vehicle performance data is estimated and does not reflect real-world conditions."</em></li>
+    <li>The source field on every vehicle and the Vehicle Detail page lets users trace data provenance.</li>
+  </ul>
+
+  <h3>6.5 Safety &amp; Responsible Use</h3>
+  <p>There is an inherent risk that a "race" application could encourage dangerous driving behavior. We addressed this through:</p>
+  <ol>
+    <li>The <strong>LEGAL-01 disclaimer</strong> explicitly states the tool is for educational and entertainment purposes only.</li>
+    <li>The application simulates results using published test data — it does not connect to real vehicles or encourage real-world racing.</li>
+    <li>The system makes no claims about vehicle safety, handling, or real-world suitability.</li>
+  </ol>
+
+  <h3>6.6 Summary</h3>
+  <p>DragRace.io adopts a "minimal footprint" approach to ethics: by collecting no personal data, restricting API access, implementing accessibility features, attributing all data sources, and including safety disclaimers, the system addresses the primary ethical dimensions relevant to its scope. The most important future improvement would be a comprehensive WCAG accessibility audit and color contrast remediation.</p>
+
+  <div class="page-break"></div>
+
+  <!-- ========== SECTION 7 ========== -->
+  <h2><span class="section-num">7</span> Final Reflection</h2>
+
+  <h3>What Is Fully Completed</h3>
+  <p>All 19 planned user stories were implemented, tested, and accepted by the Product Owner. The system delivers the complete user flow from vehicle browsing through race simulation to history review, supported by 39 passing automated tests, a 35-item regression checklist, and three sprint demo videos. Non-functional requirements — security hardening, accessibility, responsive design, and performance caching — are all implemented with concrete, verifiable evidence in the codebase.</p>
+
+  <h3>Biggest Technical Challenge</h3>
+  <p>The most complex feature was the <strong>Three.js race animation</strong> (RACE-02/RACE-03). Building a real-time 3D scene that properly reflects relative vehicle performance required careful animation timing calculations — normalizing quarter-mile times to an 8-second visual duration while maintaining the correct proportional gap between the two vehicles. We also had to handle the GLTF model loading pipeline with a robust fallback path when GLB assets are unavailable, and implement ease-in-out physics to make the animation feel natural. Integrating this with React's lifecycle (cleanup, resize handlers, reduced-motion checks) added additional complexity.</p>
+  <p>A secondary challenge was <strong>server-side caching</strong> that avoids SQLAlchemy's DetachedInstanceError. We solved this by serializing ORM objects to Pydantic models before inserting them into the TTL cache, ensuring cached responses remain valid after the database session closes.</p>
+
+  <h3>What We Would Improve with More Time</h3>
+  <ol>
+    <li><strong>User authentication and per-user history</strong> — allowing users to save their own matchup history.</li>
+    <li><strong>Cloud deployment</strong> — deploying the backend to Render and the frontend to Vercel for public access.</li>
+    <li><strong>WCAG accessibility audit</strong> — running axe-core and conducting screen-reader testing.</li>
+    <li><strong>Frontend automated tests</strong> — adding React Testing Library and Playwright E2E tests.</li>
+    <li><strong>Expanded catalog</strong> — growing beyond 149 vehicles using community-sourced data.</li>
+  </ol>
+  <p>The most important lesson from this project was the value of building a vertical slice first. By getting the full browse → race → results flow working in Sprint 01, we proved the architecture early and could confidently layer features on top in subsequent sprints without architectural rework.</p>
+
+  <!-- ========== FOOTER ========== -->
+  <div class="report-footer">
+    End of Final Project Report — Group 19, DragRace.io<br>
+    CP-317-D — Software Engineering — Wilfrid Laurier University — Winter 2026
+  </div>
+
+</body>
+</html>
