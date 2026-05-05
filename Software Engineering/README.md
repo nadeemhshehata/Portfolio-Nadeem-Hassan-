@@ -64,7 +64,7 @@ python -m pytest test_main.py tests/test_integration.py -v
 | Name | Role |
 |------|------|
 | Nadeem Hassan | Product Owner |
-| Humza Baig | Scrum Master |
+| Nadeeem Hassan | Scrum Master |
 | Omeed Attayi | Backend Developer |
 | Elias Zubaidi | Backend Developer |
 | Qasim Naeemuddin | Frontend Developer |
