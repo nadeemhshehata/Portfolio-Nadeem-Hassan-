@@ -16,7 +16,29 @@ https://nadeemhshehata.github.io/Portfolio-Nadeem-Hassan-/dragrace/
 
 DragRace.io is a racing simulator concept built around vehicle data, race physics, simulated launch/reaction variation, quarter-mile results, trap speed, and race history. The full project was designed as a full-stack system using React/TypeScript, FastAPI, SQLite, SQLAlchemy, Pydantic, Three.js, and pytest. This repo includes a deployable static version so recruiters and reviewers can actually try the concept in the browser.
 
+### Explore NovaTech
+**Accessible e-commerce demo:**  
+https://nadeemhshehata.github.io/novatech-commerce-experience/
+
+NovaTech is a responsive, privacy-first storefront with live product search, category filters, a persistent shopping cart, quantity controls, shipping calculations, and accessible interactions. The project uses dependency-free HTML, CSS, and JavaScript and is deployed publicly with GitHub Pages.
+
 ## Featured Software Engineering Projects
+
+### NovaTech — Accessible Commerce Experience
+**Type:** Responsive e-commerce storefront + live GitHub Pages deployment  
+**Stack:** HTML5, CSS3, JavaScript, localStorage, GitHub Pages
+
+NovaTech demonstrates a complete client-side shopping journey while keeping the implementation lightweight, accessible, and honest about data handling.
+
+**Engineering highlights:**
+- Built a six-product catalog with real-time search and category filtering.
+- Implemented a persistent local cart with quantity controls, shipping logic, totals, and demo checkout feedback.
+- Added semantic navigation, keyboard focus states, live status announcements, reduced-motion support, and responsive layouts.
+- Designed an accurate privacy policy and a working control that clears browser-stored cart data.
+- Removed third-party runtime assets so the storefront is fast, self-contained, and privacy-conscious.
+- Added a dependency-free validation script that checks required pages, products, roster data, links, JavaScript syntax, and privacy controls.
+
+**Links:** [Live demo](https://nadeemhshehata.github.io/novatech-commerce-experience/) · [Standalone repository](https://github.com/nadeemhshehata/novatech-commerce-experience) · [`Portfolio source folder`](NovaTech_Accessible_Commerce_Experience/)
 
 ### Tazkiyah — Production iOS App
 **Type:** Production mobile app shipped to the Apple App Store  
@@ -69,8 +91,8 @@ Database project focused on clean relational design, normalized schemas, optimiz
 
 ## Core Technical Skills
 
-**Languages:** Python, SQL, R/RMarkdown, Swift, Java, C/C++, TypeScript  
-**Frontend / Mobile:** React, TypeScript, SwiftUI, responsive UI, animation, accessibility-minded interactions  
+**Languages:** JavaScript, HTML/CSS, Python, SQL, R/RMarkdown, Swift, Java, C/C++, TypeScript  
+**Frontend / Mobile:** React, TypeScript, vanilla JavaScript, SwiftUI, responsive UI, animation, accessibility-minded interactions  
 **Backend:** FastAPI, REST APIs, Supabase, SQLAlchemy, Pydantic, SQLite, API validation, authentication-aware data flows  
 **AI/ML:** PyTorch, scikit-learn, XGBoost, statsmodels, NLP classification, feature engineering, reproducible experiment tracking  
 **Data / Analytics:** pandas, NumPy, EDA, data cleaning, statistical analysis, hypothesis testing, visualization, executive reporting  
@@ -80,6 +102,7 @@ Database project focused on clean relational design, normalized schemas, optimiz
 ## Repository Map
 
 - `dragrace/` — playable browser demo for DragRace.io
+- `NovaTech_Accessible_Commerce_Experience/` — accessible, privacy-first e-commerce storefront with a persistent cart
 - `Artificial_Intelligence_Search_C/` — Sudoku CSP, N-Queens, heuristic and backtracking search
 - `Advanced_Data_Structures_and_Algorithms_C/` — trees, graphs, heaps, hashing, algorithmic problem solving
 - `Linked List, Stack/Queue/Deque, Hash Set, BST, Sorting, Priority Queue in python/` — Python data structure implementations
@@ -90,6 +113,7 @@ Database project focused on clean relational design, normalized schemas, optimiz
 ## Quick Run Notes
 
 - **DragRace.io demo:** open `dragrace/index.html` locally or use the GitHub Pages link above.
+- **NovaTech demo:** open `NovaTech_Accessible_Commerce_Experience/index.html` locally or use the live deployment above.
 - **Python:** install dependencies if a `requirements.txt` is provided, then run the relevant script or notebook.
 - **C:** use `make` when a Makefile exists, otherwise compile with `gcc main.c -o program`.
 - **Java:** compile with `javac *.java`, then run the main class with `java Main`.
