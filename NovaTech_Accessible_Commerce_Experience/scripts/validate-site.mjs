@@ -69,6 +69,20 @@ if (!blog.includes("purpose") || !blog.includes("roadmap") && !blog.includes("go
     errors.push("Blog post must explain the website purpose and future direction.");
 }
 
+const blogSource = read("blog.html");
+const blogPostCount = (blogSource.match(/class="team-blog-post"/g) || []).length;
+if (blogPostCount !== 5) {
+    errors.push(`Expected 5 individually authored team blog posts, found ${blogPostCount}.`);
+}
+
+for (const [name, username, studentId] of roster) {
+    const authorMarker = `data-author="${name}"`;
+    if (!blogSource.includes(authorMarker)) errors.push(`Blog is missing a complete post by ${name}.`);
+    if (!blogSource.includes(username) || !blogSource.includes(studentId)) {
+        errors.push(`Blog author details are incomplete for ${name}.`);
+    }
+}
+
 const privacy = read("privacy.html");
 if (!privacy.includes('id="clear-site-data"') || !script.includes("setupPrivacyControl")) {
     errors.push("Privacy controls are incomplete.");
@@ -83,4 +97,4 @@ if (errors.length) {
     process.exit(1);
 }
 
-console.log(`Site validation passed: ${pages.length} pages, ${productCount} products, 5 group members, local-only assets, and privacy controls verified.`);
+console.log(`Site validation passed: ${pages.length} pages, ${productCount} products, 5 group members, ${blogPostCount} individual blog posts, local-only assets, and privacy controls verified.`);

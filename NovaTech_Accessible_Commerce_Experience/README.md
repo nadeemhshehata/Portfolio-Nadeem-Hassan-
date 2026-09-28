@@ -24,7 +24,7 @@ Source repository: [nadeemhshehata/novatech-commerce-experience](https://github.
 
 - **Platform selection:** GitHub Pages, using a custom static storefront with client-side e-commerce interactions.
 - **Home page:** Hero, store benefits, featured products, project values, and newsletter demo.
-- **Blog page:** Introductory article explaining the website purpose, features, and roadmap.
+- **Blog page:** Five complete introductory articles—one from every group member—covering the website purpose, customer experience, privacy, product discovery, cart design, and roadmap.
 - **About page:** Mission, story, and profiles for all five group members.
 - **Product page:** Six products with category filters, live search, prices, descriptions, and add-to-cart controls.
 - **Privacy implementation:** Accurate policy, no analytics or third-party assets, local-only cart storage, and a working “Clear saved cart” control.
@@ -67,6 +67,8 @@ node scripts/validate-site.mjs
 ```
 
 The check confirms that required pages and local links exist, the six products are present, group details match the roster, JavaScript parses, IDs are unique, and no remote page assets are used.
+
+It also verifies that the Blog contains five individually authored posts matching the complete group roster.
 
 ## GitHub Pages Deployment
 

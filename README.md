@@ -32,6 +32,7 @@ NovaTech demonstrates a complete client-side shopping journey while keeping the 
 
 **Engineering highlights:**
 - Built a six-product catalog with real-time search and category filtering.
+- Published five individually authored team blog posts covering purpose, privacy, product discovery, cart design, and the product roadmap.
 - Implemented a persistent local cart with quantity controls, shipping logic, totals, and demo checkout feedback.
 - Added semantic navigation, keyboard focus states, live status announcements, reduced-motion support, and responsive layouts.
 - Designed an accurate privacy policy and a working control that clears browser-stored cart data.
