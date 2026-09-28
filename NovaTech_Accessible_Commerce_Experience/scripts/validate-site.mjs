@@ -3,7 +3,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const requiredPages = ["index.html", "products.html", "blog.html", "about.html", "privacy.html", "cart.html"];
+const requiredPages = ["index.html", "products.html", "blog.html", "strategy.html", "about.html", "privacy.html", "cart.html"];
 const requiredFiles = [...requiredPages, "css/style.css", "js/main.js", "README.md", ".nojekyll"];
 const errors = [];
 
@@ -36,6 +36,7 @@ for (const page of pages) {
     if (!html.includes('class="skip-link"')) errors.push(`${page} is missing the skip link.`);
     if (!html.includes('id="main-content"')) errors.push(`${page} is missing the main content target.`);
     if (!html.includes('aria-current="page"')) errors.push(`${page} is missing the current-page navigation state.`);
+    if (!html.includes('href="strategy.html"')) errors.push(`${page} is missing the Strategy navigation link.`);
 }
 
 const script = read("js/main.js");
@@ -75,6 +76,34 @@ if (blogPostCount !== 5) {
     errors.push(`Expected 5 individually authored team blog posts, found ${blogPostCount}.`);
 }
 
+const shareButtonCount = (blogSource.match(/data-share-post=/g) || []).length;
+if (shareButtonCount !== 5 || !script.includes("setupShareButtons")) {
+    errors.push(`Expected 5 working team-post share controls, found ${shareButtonCount}.`);
+}
+
+const strategy = read("strategy.html");
+const commerceFeatureCount = (strategy.match(/data-commerce-feature=/g) || []).length;
+const businessElementCount = (strategy.match(/data-business-element=/g) || []).length;
+const technologyConceptCount = (strategy.match(/data-technology-concept=/g) || []).length;
+
+if (commerceFeatureCount !== 8) {
+    errors.push(`Expected all 8 e-commerce technology features, found ${commerceFeatureCount}.`);
+}
+
+if (businessElementCount !== 8) {
+    errors.push(`Expected all 8 business-model elements, found ${businessElementCount}.`);
+}
+
+if (technologyConceptCount < 6) {
+    errors.push(`Expected at least 6 Internet and web technology concepts, found ${technologyConceptCount}.`);
+}
+
+for (const requiredConcept of ["B2C", "sales revenue", "value chain", "client/server", "DNS", "HTTPS", "TCP/IP", "cloud hosting", "mobile-commerce"]) {
+    if (!strategy.toLowerCase().includes(requiredConcept.toLowerCase())) {
+        errors.push(`Strategy page is missing course concept: ${requiredConcept}`);
+    }
+}
+
 for (const [name, username, studentId] of roster) {
     const authorMarker = `data-author="${name}"`;
     if (!blogSource.includes(authorMarker)) errors.push(`Blog is missing a complete post by ${name}.`);
@@ -97,4 +126,4 @@ if (errors.length) {
     process.exit(1);
 }
 
-console.log(`Site validation passed: ${pages.length} pages, ${productCount} products, 5 group members, ${blogPostCount} individual blog posts, local-only assets, and privacy controls verified.`);
+console.log(`Site validation passed: ${pages.length} pages, ${productCount} products, 5 group members, ${blogPostCount} individual blog posts with sharing, 8 e-commerce features, 8 business-model elements, technology architecture, local-only assets, and privacy controls verified.`);

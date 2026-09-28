@@ -357,6 +357,53 @@ function setupPrivacyControl() {
     });
 }
 
+function setupShareButtons() {
+    const shareButtons = [...document.querySelectorAll("[data-share-post]")];
+    if (!shareButtons.length) return;
+
+    const copyShareUrl = async url => {
+        if (!navigator.clipboard?.writeText) {
+            showToast("Sharing is unavailable in this browser. Copy the post URL from the address bar.");
+            return;
+        }
+
+        await navigator.clipboard.writeText(url);
+        showToast("Post link copied to your clipboard.");
+    };
+
+    shareButtons.forEach(button => {
+        button.addEventListener("click", async () => {
+            const article = document.getElementById(button.dataset.sharePost);
+            const heading = article?.querySelector("h2");
+            if (!article || !heading) return;
+
+            const shareUrl = new URL(window.location.href);
+            shareUrl.hash = article.id;
+            const shareData = {
+                title: `${heading.textContent.trim()} | NovaTech`,
+                text: "Read this NovaTech team article.",
+                url: shareUrl.toString()
+            };
+
+            if (navigator.share) {
+                try {
+                    await navigator.share(shareData);
+                    showToast("Post shared.");
+                    return;
+                } catch (error) {
+                    if (error.name === "AbortError") return;
+                }
+            }
+
+            try {
+                await copyShareUrl(shareData.url);
+            } catch {
+                showToast("Sharing is unavailable in this browser. Copy the post URL from the address bar.");
+            }
+        });
+    });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     updateCartBadge();
     renderFeaturedProducts();
@@ -368,4 +415,5 @@ document.addEventListener("DOMContentLoaded", () => {
     setupNewsletter();
     setupCheckout();
     setupPrivacyControl();
+    setupShareButtons();
 });

@@ -25,6 +25,8 @@ Source repository: [nadeemhshehata/novatech-commerce-experience](https://github.
 - **Platform selection:** GitHub Pages, using a custom static storefront with client-side e-commerce interactions.
 - **Home page:** Hero, store benefits, featured products, project values, and newsletter demo.
 - **Blog page:** Five complete introductory articles—one from every group member—covering the website purpose, customer experience, privacy, product discovery, cart design, and roadmap.
+- **Social technology:** Every team article includes native device sharing with a copy-link fallback.
+- **Business and technology strategy:** A dedicated page applies the eight e-commerce technology features, all eight business-model elements, B2C and sales-revenue choices, competitive strategy, value chain, client/server architecture, mobile platform, cloud hosting, DNS/URLs, HTTPS, TCP/IP, and launch-readiness boundaries.
 - **About page:** Mission, story, and profiles for all five group members.
 - **Product page:** Six products with category filters, live search, prices, descriptions, and add-to-cart controls.
 - **Privacy implementation:** Accurate policy, no analytics or third-party assets, local-only cart storage, and a working “Clear saved cart” control.
@@ -38,6 +40,7 @@ ecommerce-site/
 ├── index.html
 ├── products.html
 ├── blog.html
+├── strategy.html
 ├── about.html
 ├── privacy.html
 ├── cart.html
@@ -68,7 +71,13 @@ node scripts/validate-site.mjs
 
 The check confirms that required pages and local links exist, the six products are present, group details match the roster, JavaScript parses, IDs are unique, and no remote page assets are used.
 
-It also verifies that the Blog contains five individually authored posts matching the complete group roster.
+It also verifies five individually authored and shareable blog posts, the eight e-commerce technology features, the eight business-model elements, key Internet and web architecture concepts, and working privacy controls.
+
+## Course Concept Implementation
+
+- **Chapter 1 — E-commerce:** The storefront demonstrates ubiquity, global reach, universal standards, richness, interactivity, information density, device-local customization, and social sharing. It identifies NovaTech as a responsive B2C e-tailer.
+- **Chapter 2 — Business models:** The Strategy page documents the value proposition, sales revenue model, market opportunity, competitive environment, competitive advantage, market strategy, organizational development, management team, value chain, value web, and focused-differentiation approach.
+- **Chapter 3 — Infrastructure:** The site explains its public URL, DNS and HTTPS delivery, client/server flow, responsive mobile platform, managed cloud hosting, and the TCP/IP and packet-routing infrastructure supplied by the Internet.
 
 ## GitHub Pages Deployment
 
